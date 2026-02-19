@@ -1632,11 +1632,11 @@ function actualizarBotonRegresar() {
       </div><!-- CUADRO 3 -->
       <div class="cuadro-box">
        <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); padding: 15px 18px; box-shadow: 0 4px 6px rgba(30, 60, 114, 0.3);">
-        <h3 style="color: #ffffff; margin: 0; font-weight: 900; font-size: 1.3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.5px;">3️⃣ Cuentas MOP 05 o mas</h3>
+        <h3 style="color: #ffffff; margin: 0; font-weight: 900; font-size: 1.3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.5px;">3️⃣ Cuentas MOP 05 o más</h3>
        </div>
        <div class="cuadro-content">
         <p style="color: #4a5568; margin-bottom: 12px; background: #e6f2ff; padding: 10px; border-radius: 8px; border-left: 4px solid #3182ce; font-size: 0.85em;"><strong style="color: #2c5282;">Aplica:</strong> Socios nuevos</p>
-        <p style="font-weight: 600; margin-bottom: 10px;">En la columna "ULTIMO PAGO" ¿La fecha es mayor a 4 años?</p>
+        <p style="font-weight: 600; margin-bottom: 10px;">En la columna "ÚLTIMO PAGO" ¿La fecha es mayor a 4 años?</p>
         <div class="question-buttons"><button class="btn btn-success" onclick="evaluarCuadro3('si')">SÍ</button> <button class="btn btn-danger" onclick="evaluarCuadro3('no')">NO (Menor a 4 años)</button>
         </div>
         <div class="button-group" style="margin-top: 15px;"><button class="btn btn-secondary" onclick="resetearCuadro3()">Limpiar</button>
@@ -1650,7 +1650,7 @@ function actualizarBotonRegresar() {
        </div>
        <div class="cuadro-content">
         <p style="color: #4a5568; margin-bottom: 12px; background: #e6f2ff; padding: 10px; border-radius: 8px; border-left: 4px solid #3182ce; font-size: 0.85em;"><strong style="color: #2c5282;">Aplica:</strong> Socios con historial en Acreimex</p>
-        <p style="font-weight: 600; margin-bottom: 10px;">En la columna "ULTIMO PAGO" ¿La fecha es mayor a 1 año?</p>
+        <p style="font-weight: 600; margin-bottom: 10px;">En la columna "ÚLTIMO PAGO" ¿La fecha es mayor a 1 año?</p>
         <div class="question-buttons"><button class="btn btn-success" onclick="evaluarCuadro4Mayor1Ano('si')">SÍ</button> <button class="btn btn-danger" onclick="mostrarCalculadora4()">NO (Menor a 1 año)</button>
         </div>
         <div id="calculadora4" style="display: none; margin-top: 20px; background: #f8f9fa; padding: 20px; border-radius: 8px;">
@@ -1706,7 +1706,7 @@ function actualizarBotonRegresar() {
       </div><!-- CUADRO 7 -->
       <div class="cuadro-box">
        <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); padding: 15px 18px; box-shadow: 0 4px 6px rgba(30, 60, 114, 0.3);">
-        <h3 style="color: #ffffff; margin: 0; font-weight: 900; font-size: 1.3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.5px;">7️⃣ Cuentas Duplicadas y Renovacion</h3>
+        <h3 style="color: #ffffff; margin: 0; font-weight: 900; font-size: 1.3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.5px;">7️⃣ Cuentas Duplicadas y Renovación</h3>
        </div>
        <div class="cuadro-content">
         <div style="background: #fff3cd; border-left: 4px solid #f39c12; padding: 15px; margin: 15px 0; border-radius: 5px;">
@@ -1747,7 +1747,7 @@ function actualizarBotonRegresar() {
         </div>
         <div class="form-group"><label for="plazo8">Periodicidad:</label> <select id="plazo8"> <option value="">Seleccione periodicidad</option> <option value="diario">DIARIO</option> <option value="semanal">SEMANAL</option> <option value="catorcenal">CATORCENAL</option> <option value="quincenal">QUINCENAL</option> <option value="mensual">MENSUAL</option> <option value="pago_minimo">PAGO MINIMO</option> <option value="variable">VARIABLE</option> <option value="bimestral">BIMESTRAL</option> <option value="trimestral">TRIMESTRAL</option> <option value="semestral">SEMESTRAL</option> <option value="anual">ANUAL</option> </select>
         </div>
-        <div class="button-group" style="margin-bottom: 10px;"><button class="btn btn-primary" onclick="calcularCapacidadPago()">Calcular</button> <button class="btn btn-secondary" onclick="resetearCuadro8()">Limpiar</button>
+        <div class="button-group" style="margin-bottom: 10px;"><button class="btn btn-primary" onclick="calcularCapacidadPago()">Cálcular</button> <button class="btn btn-secondary" onclick="resetearCuadro8()">Limpiar</button>
         </div>
         <div class="button-group"><button class="btn btn-success" id="btnGuardar8" style="display: none;" onclick="validarYGuardar()">Conectar con Cuenta del Paso 1</button>
         </div>
@@ -2008,7 +2008,7 @@ function actualizarBotonRegresar() {
     </div>
     <div class="modal-body" style="font-size: 0.95em;"><!-- SECCIÓN SUJETO A CREDITO -->
      <div style="background: #e8f4f8; border: 3px solid #3498db; padding: 25px; margin-bottom: 25px; border-radius: 12px;">
-      <h3 style="color: #2c5282; margin: 0 0 20px 0; font-size: 1.4em; text-align: center;">📋 Guía: Sujeto a Crédito (Análisis Rápido)</h3>
+      <h3 style="color: #2c5282; margin: 0 0 20px 0; font-size: 1.4em; text-align: center;">📋 Guía: Sujeto a Crédito </h3>
       <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 5px solid #3498db;">
        <h4 style="color: #2c5282; margin: 0 0 12px 0; font-size: 1.15em;">¿Cómo usarlo?</h4>
        <p style="margin: 8px 0; line-height: 1.7;"><strong style="color: #27ae60;">✓ Evaluación Rápida</strong></p>
@@ -2021,7 +2021,7 @@ function actualizarBotonRegresar() {
       </div>
      </div><!-- SECCIÓN CAPACIDAD DE PAGO -->
      <div style="background: #d4edda; border: 3px solid #27ae60; padding: 25px; margin-bottom: 25px; border-radius: 12px;">
-      <h3 style="color: #155724; margin: 0 0 20px 0; font-size: 1.4em; text-align: center;">Guía Detallada: Capacidad de Pago (Cálculo de Montos)</h3><!-- PASO 1 -->
+      <h3 style="color: #155724; margin: 0 0 20px 0; font-size: 1.4em; text-align: center;">Guía Detallada: Capacidad de Pago</h3><!-- PASO 1 -->
       <div style="background: white; padding: 18px; margin-bottom: 15px; border-radius: 8px; border-left: 5px solid #3498db;">
        <h4 style="color: #2c5282; margin: 0 0 10px 0; font-size: 1.1em;"><span style="background: #3498db; color: white; padding: 4px 12px; border-radius: 15px; margin-right: 8px; font-size: 0.9em;">1</span> Evaluar y Registrar Cuentas</h4>
        <ul style="margin: 8px 0; padding-left: 40px; line-height: 1.7;">
@@ -3581,4 +3581,5 @@ if ("serviceWorker" in navigator) {
 </script>
  </body>
 </html>
+
 
