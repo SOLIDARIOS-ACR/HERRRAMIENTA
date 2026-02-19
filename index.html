@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-192.png"> 
-  <title>Sistema de Análisis de Riesgo Crediticio</title>
+  <title>Sistema de Análisis de Riesgo Créditicio</title>
     <style>
         body {
             box-sizing: border-box;
@@ -265,7 +265,7 @@
                                     <button id="btnAprobarCalculoMedio" onclick="aprobarRiesgoMedio()" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors hidden">
                                         Aprobar - Riesgo Medio Sujeto a Crédito
                                     </button>
-                                    <button id="btnContinuarCalculoMedio" onclick="mostrarPregunta('2-1')" class="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-colors hidden">
+                                    <button id="btnContinuarCalculoMedio" onclick="mostrarPregunta('2-1-1')" class="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-colors hidden">
                                         Continuar a Riesgo Alto
                                     </button>
                                 </div>
@@ -1594,9 +1594,9 @@ function actualizarBotonRegresar() {
    <main class="main-content"><!-- PASO 1 -->
     <div class="section">
      <div class="section-header">
-      <h2>PASO 1: Evaluacion de Cuentas Crediticias</h2><span class="paso-badge">Paso 1 de 2</span>
+      <h2>PASO 1: Evaluación de Cuentas Crediticias</h2><span class="paso-badge">Paso 1 de 2</span>
      </div>
-     <div class="info-box"><strong>Instrucciones:</strong> Evalue cada tipo de cuenta segun los criterios establecidos. Puede registrar multiples cuentas y continuar registrando hasta tener todas las cuentas evaluadas. Una vez que tenga todas las cuentas registradas, puede proceder al Paso 2 para usar las calculadoras.
+     <div class="info-box"><strong>Instrucciones:</strong> Evalué cada tipo de cuenta según los criterios establecidos. Puede registrar multiples cuentas y continuar registrando hasta tener todas las cuentas evaluadas. Una vez que tenga todas las cuentas registradas, puede proceder al Paso 2 para usar las calculadoras.
      </div>
      <div class="cuadros-grid"><!-- CUADRO 1 -->
       <div class="cuadro-box">
@@ -1668,7 +1668,7 @@ function actualizarBotonRegresar() {
       </div><!-- CUADRO 5 -->
       <div class="cuadro-box">
        <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); padding: 15px 18px; box-shadow: 0 4px 6px rgba(30, 60, 114, 0.3);">
-        <h3 style="color: #ffffff; margin: 0; font-weight: 900; font-size: 1.3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.5px;">5️⃣ Tarjetas de Credito</h3>
+        <h3 style="color: #ffffff; margin: 0; font-weight: 900; font-size: 1.3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.5px;">5️⃣ Tarjetas de Crédito</h3>
        </div>
        <div class="cuadro-content">
         <p style="color: #4a5568; margin-bottom: 12px; background: #e6f2ff; padding: 10px; border-radius: 8px; border-left: 4px solid #3182ce; font-size: 0.85em;"><strong style="color: #2c5282;">Criterio:</strong> Tarjetas de crédito, servicios, telecomunicaciones, gubernamentales</p>
@@ -1682,14 +1682,14 @@ function actualizarBotonRegresar() {
       </div><!-- CUADRO 6 -->
       <div class="cuadro-box">
        <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); padding: 15px 18px; box-shadow: 0 4px 6px rgba(30, 60, 114, 0.3);">
-        <h3 style="color: #ffffff; margin: 0; font-weight: 900; font-size: 1.3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.5px;">6️⃣ Creditos Revolventes</h3>
+        <h3 style="color: #ffffff; margin: 0; font-weight: 900; font-size: 1.3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.5px;">6️⃣ Créditos Revolventes</h3>
        </div>
        <div class="cuadro-content">
         <p style="color: #4a5568; margin-bottom: 12px; background: #e6f2ff; padding: 10px; border-radius: 8px; border-left: 4px solid #3182ce; font-size: 0.85em;"><strong style="color: #2c5282;">Criterio:</strong> Tarjetas de crédito, líneas de crédito o crédito revolventes</p><!-- PREGUNTA ÚNICA -->
         <p style="font-weight: 600; margin-bottom: 10px;">Revisa las columnas "FECHA DE APERTURA" y "ULTIMA COMPRA" ¿Corresponden a la misma fecha?</p>
         <div class="question-buttons"><button class="btn btn-success" onclick="rechazarCuadro6PreguntaUnica()">SÍ</button> <button class="btn btn-danger" onclick="mostrarCalculadoraLimiteUnica()">NO</button>
         </div>
-        <div id="resultado6a" style="margin-top: 10px;"></div><!-- CALCULADORA DE LÍMITE DE CR��DITO -->
+        <div id="resultado6a" style="margin-top: 10px;"></div><!-- CALCULADORA DE LÍMITE DE CRÉDITO -->
         <div id="calculadoraLimiteUnica" style="display: none; background: #e6f7ed; border: 3px solid #27ae60; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
          <h4 style="color: #27ae60; margin: 0 0 12px 0; font-size: 1.05em; font-weight: 700;">🧮 Calculadora: Créditos Revolventes</h4>
          <div class="form-group"><label for="pagoMinimoUnica">Monto a Pagar ($):</label> <input type="number" id="pagoMinimoUnica" placeholder="Ej: 500" step="0.01" oninput="verificarMontoPagarUnica()">
@@ -1712,17 +1712,17 @@ function actualizarBotonRegresar() {
         <div style="background: #fff3cd; border-left: 4px solid #f39c12; padding: 15px; margin: 15px 0; border-radius: 5px;">
          <p style="margin: 8px 0; color: #856404;"><strong>Revisa las columnas:</strong></p>
          <ul style="margin: 10px 0; padding-left: 20px; color: #856404;">
-          <li>"TIPO DE CREDITO"</li>
+          <li>"TIPO DE CRÉDITO"</li>
           <li>"CUENTA"</li>
           <li>"RESPONSABILIDAD"</li>
           <li>"APERTURA"</li>
-          <li>"CREDITO MAX."</li>
+          <li>"CREDITO MÁX."</li>
           <li>"SALDO ACTUAL"</li>
          </ul>
          <p style="margin: 8px 0; color: #856404;"><strong>Solo considera UNA cuenta</strong> si coinciden estos datos</p>
          <p style="margin: 8px 0; color: #856404;"><strong>NO considerar</strong> las cuentas de <strong>ACREIMEX</strong> que el socio vaya a renovar o liquidar</p>
         </div>
-        <div class="warning-box"><strong>ACCION REQUERIDA:</strong> Revisar manualmente las cuentas duplicadas y excluir renovaciones de ACREIMEX
+        <div class="warning-box"><strong>ACCIÓN REQUERIDA:</strong> Revisar manualmente las cuentas duplicadas y excluir renovaciones de ACREIMEX
         </div>
        </div>
       </div>
@@ -1731,7 +1731,7 @@ function actualizarBotonRegresar() {
     <div class="step-divider"></div><!-- PASO 2 Y 3 COMBINADO -->
     <div class="section">
      <div class="section-header" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
-      <h2>PASO 2: Calculadora, Resumen y Calculo Final</h2><span class="paso-badge">Paso 2 de 2</span>
+      <h2>PASO 2: Calculadora, Resumen y Cálculo Final</h2><span class="paso-badge">Paso 2 de 2</span>
      </div>
      <div class="info-box"><strong>Instrucciones:</strong> Use la calculadora para asignar montos a las cuentas registradas del Paso 1, revise todas las cuentas, ajuste montos si es necesario, y calcule la capacidad de pago total.
      </div>
@@ -1765,7 +1765,7 @@ function actualizarBotonRegresar() {
         </div>
         <div id="sinCuentas" class="sin-cuentas">
          <h3>Sin Cuentas Registradas</h3>
-         <p>Complete la evaluacion en el Paso 1 y registre las cuentas que apliquen</p>
+         <p>Complete la evaluación en el Paso 1 y registre las cuentas que apliquen</p>
         </div><!-- Contenedores para las 50 cuentas -->
         <div id="cuenta1-container" class="cuenta-container">
          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;"><label for="cuenta1" style="margin: 0;">Cuenta 1:</label> <button onclick="eliminarCuenta(1)" class="btn-eliminar-cuenta" title="Eliminar cuenta">��</button>
@@ -1980,7 +1980,7 @@ function actualizarBotonRegresar() {
    <div class="modal-content">
     <div class="modal-header"><span class="close" onclick="cerrarModal()">×</span>
      <h3>REGISTRAR CUENTA</h3>
-     <p>Seleccione el numero de cuenta para registrar</p>
+     <p>Seleccione el número de cuenta para registrar</p>
     </div>
     <div class="modal-body">
      <div id="accountGrid" class="account-grid"></div>
@@ -1991,7 +1991,7 @@ function actualizarBotonRegresar() {
    <div class="modal-content">
     <div class="modal-header draggable-header"><span class="close" onclick="cerrarModalFicha()">×</span>
      <h3>FICHA DE CAPACIDAD DE PAGO</h3>
-     <p>Resumen completo de evaluacion crediticia</p>
+     <p>Resumen completo de evaluación créditicia</p>
     </div>
     <div class="modal-body">
      <div id="fichaContent"></div>
@@ -2003,7 +2003,7 @@ function actualizarBotonRegresar() {
   <div id="modalBienvenida" class="modal" style="display: block;">
    <div class="modal-content" style="max-width: 900px;">
     <div class="modal-header" style="background: linear-gradient(135deg, #001f3f 0%, #003366 100%);">
-     <h3 style="font-size: 1.8em; text-align: center; margin-bottom: 8px;">BIENVENIDO AL SISTEMA DE EVALUACION</h3>
+     <h3 style="font-size: 1.8em; text-align: center; margin-bottom: 8px;">BIENVENIDO AL SISTEMA DE EVALUACIÓN</h3>
      <p style="text-align: center; font-size: 1.1em; margin: 0; opacity: 0.95;">Guía completa para usar la herramienta correctamente</p>
     </div>
     <div class="modal-body" style="font-size: 0.95em;"><!-- SECCIÓN SUJETO A CREDITO -->
@@ -2044,7 +2044,7 @@ function actualizarBotonRegresar() {
         <li>Revise los montos registrados en el Cuadro 9</li>
         <li>Use la <strong>X pequeña</strong> junto a cada cuenta para eliminarla si es necesario</li>
         <li>Ajuste montos manualmente si lo requiere</li>
-        <li>Click en <strong>"Calcular Capacidad de Pago Total"</strong></li>
+        <li>Click en <strong>"Cálcular Capacidad de Pago Total"</strong></li>
         <li>Click en <strong>"Ver Ficha Completa"</strong> para generar el informe y descargarlo</li>
        </ul>
       </div><!-- PASO 4 -->
@@ -2112,7 +2112,7 @@ function actualizarBotonRegresar() {
                         <strong>Fecha Límite:</strong> ${fechaLimite.toLocaleDateString('es-MX')}<br>
                         <small>${fechaConsulta.toLocaleDateString('es-MX')} < ${fechaLimite.toLocaleDateString('es-MX')}</small>
                         <div style="background: #fff3cd; border: 2px solid #f39c12; border-radius: 8px; padding: 15px; margin: 15px 0; text-align: center;">
-                            <strong style="color: #856404;">ACCION OBLIGATORIA</strong><br>
+                            <strong style="color: #856404;">ACCIÓN OBLIGATORIA</strong><br>
                             <span style="color: #856404;">Debe registrar esta cuenta para continuar</span><br>
                             <button class="btn btn-success" onclick="abrirModalRegistro(1)" style="margin-top: 10px; animation: pulse 2s infinite;">REGISTRAR CUENTA OBLIGATORIO</button>
                         </div>
@@ -2138,7 +2138,7 @@ function actualizarBotonRegresar() {
             if (respuesta === 'si') {
                 resultado = '<div class="result result-rejected"><strong>RESULTADO:</strong> CUENTA RECHAZADA - Tiene fecha de cierre</div>';
             } else {
-                resultado = '<div class="result result-approved"><strong>RESULTADO:</strong> CUENTA APROBADA<br><div style="background: #fff3cd; border: 2px solid #f39c12; border-radius: 8px; padding: 15px; margin: 15px 0; text-align: center;"><strong style="color: #856404;">ACCION OBLIGATORIA</strong><br><span style="color: #856404;">Debe registrar esta cuenta para continuar</span><br><button class="btn btn-success" onclick="abrirModalRegistro(2)" style="margin-top: 10px; animation: pulse 2s infinite;">REGISTRAR CUENTA OBLIGATORIO</button></div></div>';
+                resultado = '<div class="result result-approved"><strong>RESULTADO:</strong> CUENTA APROBADA<br><div style="background: #fff3cd; border: 2px solid #f39c12; border-radius: 8px; padding: 15px; margin: 15px 0; text-align: center;"><strong style="color: #856404;">ACCIÓN OBLIGATORIA</strong><br><span style="color: #856404;">Debe registrar esta cuenta para continuar</span><br><button class="btn btn-success" onclick="abrirModalRegistro(2)" style="margin-top: 10px; animation: pulse 2s infinite;">REGISTRAR CUENTA OBLIGATORIO</button></div></div>';
             }
             document.getElementById('resultado2').innerHTML = resultado;
         }
@@ -2149,7 +2149,7 @@ function actualizarBotonRegresar() {
             if (respuesta === 'si') {
                 resultado = '<div class="result result-rejected"><strong>RESULTADO:</strong> CUENTA RECHAZADA - Último pago mayor a 4 años</div>';
             } else {
-                resultado = '<div class="result result-approved"><strong>RESULTADO:</strong> CUENTA APROBADA<br><div style="background: #fff3cd; border: 2px solid #f39c12; border-radius: 8px; padding: 15px; margin: 15px 0; text-align: center;"><strong style="color: #856404;">ACCION OBLIGATORIA</strong><br><span style="color: #856404;">Debe registrar esta cuenta para continuar</span><br><button class="btn btn-success" onclick="abrirModalRegistro(3)" style="margin-top: 10px; animation: pulse 2s infinite;">REGISTRAR CUENTA OBLIGATORIO</button></div></div>';
+                resultado = '<div class="result result-approved"><strong>RESULTADO:</strong> CUENTA APROBADA<br><div style="background: #fff3cd; border: 2px solid #f39c12; border-radius: 8px; padding: 15px; margin: 15px 0; text-align: center;"><strong style="color: #856404;">ACCIÓN OBLIGATORIA</strong><br><span style="color: #856404;">Debe registrar esta cuenta para continuar</span><br><button class="btn btn-success" onclick="abrirModalRegistro(3)" style="margin-top: 10px; animation: pulse 2s infinite;">REGISTRAR CUENTA OBLIGATORIO</button></div></div>';
             }
             document.getElementById('resultado3').innerHTML = resultado;
         }
@@ -2210,7 +2210,7 @@ function actualizarBotonRegresar() {
             if (respuesta === 'si') {
                 resultado = '<div class="result result-rejected"><strong>RESULTADO:</strong> CUENTA RECHAZADA - Saldo menor a $8,000.00</div>';
             } else {
-                resultado = '<div class="result result-approved"><strong>RESULTADO:</strong> CUENTA APROBADA<br><div style="background: #fff3cd; border: 2px solid #f39c12; border-radius: 8px; padding: 15px; margin: 15px 0; text-align: center;"><strong style="color: #856404;">ACCION OBLIGATORIA</strong><br><span style="color: #856404;">Debe registrar esta cuenta para continuar</span><br><button class="btn btn-success" onclick="abrirModalRegistro(5)" style="margin-top: 10px; animation: pulse 2s infinite;">REGISTRAR CUENTA OBLIGATORIO</button></div></div>';
+                resultado = '<div class="result result-approved"><strong>RESULTADO:</strong> CUENTA APROBADA<br><div style="background: #fff3cd; border: 2px solid #f39c12; border-radius: 8px; padding: 15px; margin: 15px 0; text-align: center;"><strong style="color: #856404;">ACCIÓN OBLIGATORIA</strong><br><span style="color: #856404;">Debe registrar esta cuenta para continuar</span><br><button class="btn btn-success" onclick="abrirModalRegistro(5)" style="margin-top: 10px; animation: pulse 2s infinite;">REGISTRAR CUENTA OBLIGATORIO</button></div></div>';
             }
             document.getElementById('resultado5').innerHTML = resultado;
         }
@@ -2340,7 +2340,7 @@ function actualizarBotonRegresar() {
             }
 
             if (cuentasGuardadas >= 50) {
-                document.getElementById('resultado6a').innerHTML = '<div class="result result-rejected">Maximo 50 cuentas permitidas. Limpie el Cuadro 9 para continuar.</div>';
+                document.getElementById('resultado6a').innerHTML = '<div class="result result-rejected">Máximo 50 cuentas permitidas. Limpie el Cuadro 9 para continuar.</div>';
                 return;
             }
 
@@ -2375,7 +2375,7 @@ function actualizarBotonRegresar() {
             return null;
         }
 
-        // Funciones de evaluaci������n CUADRO 6 - PREGUNTA 2
+        // Funciones de evaluación CUADRO 6 - PREGUNTA 2
         function mostrarCalculadora6() {
             // Ocultar resultado de "NO" si estaba visible
             document.getElementById('resultado6b').innerHTML = '';
@@ -2698,7 +2698,7 @@ function actualizarBotonRegresar() {
                     <p style="margin: 8px 0;"><strong>Monto a Pagar:</strong> $0.00</p>
                     <p style="margin: 8px 0;"><strong>Límite de Crédito:</strong> ${limiteCredito.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'})}</p>
                     <p style="margin: 8px 0;"><strong>1.6% del Límite:</strong> ${montoAConsiderar.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'})}</p>
-                    <p style="margin: 10px 0 0 0; color: #27ae60; font-weight: bold;">�� Se considera el 1.6% del Límite de Crédito</p>
+                    <p style="margin: 10px 0 0 0; color: #27ae60; font-weight: bold;"> Se considera el 1.6% del Límite de Crédito</p>
                 `;
             }
             // Caso 2: Si monto a pagar tiene valor, solo se considera ese monto
@@ -2976,12 +2976,12 @@ function actualizarBotonRegresar() {
             
             const detalles = `
                 <div style="background: #e8f4f8; border-left: 4px solid #3498db; padding: 20px; margin-top: 15px; border-radius: 8px;">
-                    <h4 style="margin: 0 0 15px 0; color: #2c3e50; font-size: 1.1em;">Detalles del Calculo:</h4>
+                    <h4 style="margin: 0 0 15px 0; color: #2c3e50; font-size: 1.1em;">Detalles del Cálculo:</h4>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div>
                             <p style="margin: 8px 0;"><strong>Monto (Pago):</strong><br>${monto.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'})}</p>
                             <p style="margin: 8px 0;"><strong>Periodicidad:</strong><br>${tipoPlazoTexto}</p>
-                            <p style="margin: 8px 0;"><strong>Factor de conversion:</strong><br>×${factor}</p>
+                            <p style="margin: 8px 0;"><strong>Factor de conversión:</strong><br>×${factor}</p>
                             <p style="margin: 8px 0;"><strong>Monto x Plazo:</strong><br>${montoXPlazo.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'})}</p>
                         </div>
                         <div>
@@ -3245,8 +3245,8 @@ function actualizarBotonRegresar() {
                 2: 'Cuentas MOP 01-04',
                 3: 'Cuentas MOP 05 o más (Socios nuevos)',
                 4: 'Cuentas MOP 05 o más (Historial Acreimex)',
-                5: 'Tarjetas de Credito y Servicios',
-                6: 'Creditos Revolventes',
+                5: 'Tarjetas de Crédito y Servicios',
+                6: 'Créditos Revolventes',
                 7: 'Cuentas Duplicadas y Renovacion',
                 8: 'Calculadora de Capacidad de Pago'
             };
@@ -3257,12 +3257,12 @@ function actualizarBotonRegresar() {
             const criterios = {
                 1: 'Fecha de consulta menor a (apertura + plazo + 1 mes)',
                 2: 'Sin fecha de cierre en columna CIERRE',
-                3: 'Ultimo pago menor a 4 a����os',
+                3: 'Ultimo pago menor a 4 años',
                 4: 'Ultimo pago NO mayor a 1 año - Socios con historial en Acreimex (monto directo ingresado)',
                 5: 'Saldo actual mayor a $8,000.00',
                 6: esPagoMinimo ? 'Fecha de apertura = ultima compra Y se ingreso pago minimo' : 'Calculadora de límite de crédito: Se consideró el mayor entre pago mínimo y 1.6% del saldo actual',
                 7: 'Cuenta duplicada identificada manualmente',
-                8: 'Calculado mediante formula: menor entre (MONTO x PLAZO) y SALDO ACTUAL'
+                8: 'Cálculado mediante formula: menor entre (MONTO x PLAZO) y SALDO ACTUAL'
             };
             return criterios[cuadro] || 'Criterio no especificado';
         }
@@ -3372,11 +3372,11 @@ function actualizarBotonRegresar() {
             let contenidoFicha = `
                 <div style="text-align: center; margin-bottom: 30px;">
                     <h2 style="color: #2c3e50; margin: 0;">FICHA DE CAPACIDAD DE PAGO</h2>
-                    <p style="color: #666; margin: 5px 0;">Fecha de evaluacion: ${fechaActual}</p>
+                    <p style="color: #666; margin: 5px 0;">Fecha de evaluación: ${fechaActual}</p>
                 </div>
 
                 <div style="background: #f8f9fa; border: 2px solid #3498db; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-                    <h3 style="color: #2c3e50; margin: 0 0 15px 0;">RESUMEN EJECUTIVO</h3>
+                    <h3 style="color: #2c3e50; margin: 0 0 15px 0;">RESUMEN</h3>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                         <div>
                             <p><strong>Total de cuentas evaluadas:</strong> ${Object.keys(cuentasRegistradas).length}</p>
@@ -3396,10 +3396,10 @@ function actualizarBotonRegresar() {
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                     <thead>
                         <tr style="background: #3498db; color: white;">
-                            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Cuentas Aplico del Paso 1</th>
+                            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Cuentas Aplicadas del Paso 1</th>
                             <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Como Aplica</th>
                             <th style="border: 1px solid #ddd; padding: 12px; text-align: right;">Monto o Saldo que se Considero</th>
-                            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Fecha (Solo MOP 01 Y 02)</th>
+                            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Fecha limite( MOP 01 Y 02)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -3453,7 +3453,7 @@ function actualizarBotonRegresar() {
 
         function generarAnalisisPoliticas() {
             let analisis = `
-                <h3 style="color: #2c3e50; border-bottom: 2px solid #f39c12; padding-bottom: 10px;">ANALISIS DE POLITICAS</h3>
+                <h3 style="color: #2c3e50; border-bottom: 2px solid #f39c12; padding-bottom: 10px;">ANÁLISIS DE POLITICAS</h3>
                 <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
             `;
 
@@ -3461,22 +3461,22 @@ function actualizarBotonRegresar() {
             const cuentasConMonto = Object.values(cuentasRegistradas).filter(c => c.monto > 0);
 
             if (tiposCuentas.includes(1)) {
-                analisis += '<p><strong>Cuentas MOP 01-02:</strong> Evaluadas segun criterio de plazo y fechas.</p>';
+                analisis += '<p><strong>Cuentas MOP 01-02:</strong> Evaluadas según criterio de plazo y fechas.</p>';
             }
             if (tiposCuentas.includes(2)) {
-                analisis += '<p><strong>Cuentas MOP 01-04:</strong> Evaluadas segun fecha de cierre.</p>';
+                analisis += '<p><strong>Cuentas MOP 01-04:</strong> Evaluadas según fecha de cierre.</p>';
             }
             if (tiposCuentas.includes(3)) {
-                analisis += '<p><strong>Cuentas MOP 05+:</strong> Evaluadas según ultimo pago (criterio 4 años).</p>';
+                analisis += '<p><strong>Cuentas MOP 05+:</strong> Evaluadas según último pago (criterio 4 años).</p>';
             }
             if (tiposCuentas.includes(4)) {
-                analisis += '<p><strong>Cuentas con historial Acreimex:</strong> Evaluadas segun ultimo pago y historico (monto directo ingresado).</p>';
+                analisis += '<p><strong>Cuentas con historial Acreimex:</strong> Evaluadas según ultimo pago y histórico (monto directo ingresado).</p>';
             }
             if (tiposCuentas.includes(5)) {
-                analisis += '<p><strong>Tarjetas y servicios:</strong> Evaluadas segun saldo actual ($8,000 limite).</p>';
+                analisis += '<p><strong>Tarjetas y servicios:</strong> Evaluadas según saldo actual ($8,000 limite).</p>';
             }
             if (tiposCuentas.includes(6)) {
-                analisis += '<p><strong>Creditos revolventes:</strong> Evaluadas segun fecha de apertura = ultima compra y pago minimo (1.6% del saldo actual).</p>';
+                analisis += '<p><strong>Creditos revolventes:</strong> Evaluadas según fecha de apertura = ultima compra y pago mínimo (1.6% del saldo actual).</p>';
             }
             if (tiposCuentas.includes(7)) {
                 analisis += '<p><strong>Cuentas duplicadas:</strong> Identificadas y consideradas manualmente.</p>';
@@ -3581,3 +3581,4 @@ if ("serviceWorker" in navigator) {
 </script>
  </body>
 </html>
+
