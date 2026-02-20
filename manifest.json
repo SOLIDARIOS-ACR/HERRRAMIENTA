@@ -1,6 +1,6 @@
 {
   "name": "Herramienta de Buró",
-  "short_name": "Buró",
+  "short_name": "Herramienta-Buró",
   "start_url": "/HERRAMIENTA/",
   "scope": "/HERRAMIENTA/",
   "display": "standalone",
@@ -22,6 +22,7 @@
     }
   ]
 }
+
 
 
 
