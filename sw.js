@@ -3,7 +3,7 @@ const CACHE_NAME = `herramienta-buró-${CACHE_VERSION}`;
 
 const STATIC_ASSETS = [
   "/HERRRAMIENTA-BURÓ/",
-  "/HERRRAMIENTA-BURÓ/index.html",
+  "/HERRRAMIENTA/index.html",
   "/HERRRAMIENTA-BURÓ/icon-192.png",
   "/HERRRAMIENTA-BURÓ/icon-512.png"
 ];
@@ -52,6 +52,7 @@ self.addEventListener("fetch", event => {
   );
 
 });
+
 
 
 
