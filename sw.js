@@ -1,60 +1,116 @@
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v3";
 const CACHE_NAME = `herramienta-${CACHE_VERSION}`;
 
 const STATIC_ASSETS = [
-  "/HERRRAMIENTA/",
-  "/HERRRAMIENTA/index.html",
-  "/HERRRAMIENTA/styles.css",   // si existe
-  "/HERRRAMIENTA/app.js",       // si existe
-  "/HERRRAMIENTA/manifest.json",
-  "/HERRRAMIENTA/icon-192.png",
-  "/HERRRAMIENTA/icon-512.png"
+  "/HERRAMIENTA/",
+  "/HERRAMIENTA/index.html",
+  "/HERRAMIENTA/styles.css",
+  "/HERRAMIENTA/app.js",
+  "/HERRAMIENTA/manifest.json",
+  "/HERRAMIENTA/icon-192.png",
+  "/HERRAMIENTA/icon-512.png"
 ];
 
+
+// =====================
 // INSTALL
+// =====================
 self.addEventListener("install", event => {
   self.skipWaiting();
+
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_NAME).then(async cache => {
+      for (const asset of STATIC_ASSETS) {
+        try {
+          await cache.add(asset);
+        } catch (err) {
+          console.warn("No se pudo cachear:", asset);
+        }
+      }
+    })
   );
 });
 
+
+// =====================
 // ACTIVATE
+// =====================
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
-        keys.map(key => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
+        keys
+          .filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
       )
     )
   );
+
   self.clients.claim();
 });
 
-// FETCH - Network First
+
+// =====================
+// MENSAJE PARA UPDATE INMEDIATO
+// =====================
+self.addEventListener("message", event => {
+  if (event.data && event.data.action === "skipWaiting") {
+    self.skipWaiting();
+  }
+});
+
+
+// =====================
+// FETCH
+// =====================
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
 
+  // 🔹 HTML → Network First
+  if (event.request.headers.get("accept")?.includes("text/html")) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, clone);
+          });
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // 🔹 CSS / JS / Imágenes → Cache First
   event.respondWith(
-    fetch(event.request)
-      .then(response => {
+    caches.match(event.request).then(cached => {
+      if (cached) return cached;
+
+      return fetch(event.request).then(response => {
+        if (!response || response.status !== 200) {
+          return response;
+        }
+
         const clone = response.clone();
         caches.open(CACHE_NAME).then(cache => {
           cache.put(event.request, clone);
         });
-        return response;
-      })
-      .catch(() => caches.match(event.request))
-  );
 
+        return response;
+      });
+    })
+  );
 });
+ 2 archivos adjuntos
+  •  Analizado por Gmail
+
+      
+ 
+
 
 
 
