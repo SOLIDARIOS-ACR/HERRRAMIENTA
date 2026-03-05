@@ -3,7 +3,7 @@ const CACHE_NAME = `herramienta-${CACHE_VERSION}`;
 
 const STATIC_ASSETS = [
   "/HERRAMIENTA/",
-  "/HERRAMIENTA/index.html",
+  "/HERRAMIENTA/indeex.html",
   "/HERRAMIENTA/styles.css",
   "/HERRAMIENTA/app.js",
   "/HERRAMIENTA/manifest.json",
@@ -110,6 +110,7 @@ self.addEventListener("fetch", event => {
 
       
  
+
 
 
 
