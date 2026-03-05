@@ -3819,10 +3819,19 @@ function actualizarBotonRegresar() {
       document.getElementById('nuevoEmail').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') agregarAsesor();
       });
+            });
+          }
+        };
+      };
+
+    })
+    .catch(error => {
+      console.error("Error registrando el Service Worker:", error);
     });
-  </script>
- </script>
+}
+</script>
  </body>
 </html>
+
 
 
