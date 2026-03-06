@@ -3,6 +3,8 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png"> 
   <title>Sistema de Evaluación - Login</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <style>
@@ -4029,5 +4031,315 @@ if ("serviceWorker" in navigator) {
       });
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d85294464e0154d',t:'MTc3MjgzOTk2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c62b0ed15555638',t:'MTc2OTc5NDE2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+   </div>
+  </div>
+  <script>
+    // Configuración
+    const ADMIN_PASSWORD = "admin123";
+    const ASESOR_PASSWORD = "asesor123";
+    let usuarioActual = null;
+    let asesores = [];
+    let asesoresTodos = [];
+
+    // Inicializar App con localStorage
+    function inicializarApp() {
+      cargarAsesores();
+      // Agregar asesor de prueba si no hay ninguno
+      if (asesores.length === 0) {
+        asesores.push({
+          email: 'prueba@correo.com',
+          estado: 'activo',
+          fechaCreacion: new Date().toISOString()
+        });
+        guardarAsesores();
+      }
+    }
+
+    function cargarAsesores() {
+      const datos = localStorage.getItem('asesores');
+      asesores = datos ? JSON.parse(datos) : [];
+      asesoresTodos = asesores;
+    }
+
+    function guardarAsesores() {
+      localStorage.setItem('asesores', JSON.stringify(asesores));
+      mostrarListaAsesores();
+    }
+
+    inicializarApp();
+
+    // === FUNCIONES DE LOGIN ===
+    function loginAsesor() {
+      const email = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+      const errorDiv = document.getElementById('errorLogin');
+
+      if (!email || !password) {
+        mostrarError('Completa todos los campos', errorDiv);
+        return;
+      }
+
+      if (password !== ASESOR_PASSWORD) {
+        mostrarError('Contraseña incorrecta', errorDiv);
+        return;
+      }
+
+      const asesor = asesores.find(a => a.email.toLowerCase() === email.toLowerCase() && a.estado === 'activo');
+      
+      if (!asesor) {
+        mostrarError('Correo no registrado o desactivado', errorDiv);
+        return;
+      }
+
+      usuarioActual = email;
+      document.getElementById('emailAsesor').textContent = email;
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('evaluacionScreen').classList.remove('hidden');
+      reiniciar();
+    }
+
+    // === FUNCIONES DE PANEL ADMIN ===
+    function mostrarPanelAdmin() {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('adminPanel').classList.remove('hidden');
+      document.getElementById('adminPassword').value = '';
+      document.getElementById('adminContent').classList.add('hidden');
+    }
+
+    function verificarAdminPassword() {
+      const password = document.getElementById('adminPassword').value;
+      const errorDiv = document.getElementById('adminError');
+
+      if (password !== ADMIN_PASSWORD) {
+        mostrarError('Contraseña admin incorrecta', errorDiv);
+        return;
+      }
+
+      errorDiv.classList.add('hidden');
+      document.getElementById('passwordSection').classList.add('hidden');
+      document.getElementById('adminContent').classList.remove('hidden');
+    }
+
+    async function agregarAsesor() {
+      const email = document.getElementById('nuevoEmail').value.trim().toLowerCase();
+      const mensajeDiv = document.getElementById('mensajeAgregado');
+
+      if (!email || !email.includes('@')) {
+        mostrarMensajeAgregado('❌ Ingresa un correo válido', false, mensajeDiv);
+        return;
+      }
+
+      if (asesoresTodos.some(a => a.email.toLowerCase() === email)) {
+        mostrarMensajeAgregado('❌ Este correo ya está registrado', false, mensajeDiv);
+        return;
+      }
+
+      mostrarMensajeAgregado('⏳ Agregando...', true, mensajeDiv);
+
+      // Agregar a la lista
+      asesores.push({
+        email: email,
+        estado: 'activo',
+        fechaCreacion: new Date().toISOString()
+      });
+
+      asesoresTodos = asesores;
+      guardarAsesores();
+      
+      mostrarMensajeAgregado('✅ Asesor agregado correctamente', true, mensajeDiv);
+      document.getElementById('nuevoEmail').value = '';
+      setTimeout(() => mensajeDiv.classList.add('hidden'), 3000);
+    }
+
+    function mostrarMensajeAgregado(mensaje, esExito, elemento) {
+      elemento.textContent = mensaje;
+      elemento.classList.remove('hidden', 'bg-green-200', 'text-green-800', 'bg-red-200', 'text-red-800');
+      
+      if (esExito) {
+        elemento.classList.add('bg-green-200', 'text-green-800');
+      } else {
+        elemento.classList.add('bg-red-200', 'text-red-800');
+      }
+    }
+
+    async function eliminarAsesor(asesor) {
+      const index = asesores.findIndex(a => a.email === asesor.email);
+      if (index > -1) {
+        asesores[index].estado = 'inactivo';
+        guardarAsesores();
+      }
+    }
+
+    async function reactivarAsesor(asesor) {
+      const index = asesores.findIndex(a => a.email === asesor.email);
+      if (index > -1) {
+        asesores[index].estado = 'activo';
+        guardarAsesores();
+      }
+    }
+
+    async function eliminarAsesorPermanente(asesor) {
+      if (confirm(`¿Deseas eliminar permanentemente a ${asesor.email}?`)) {
+        asesores = asesores.filter(a => a.email !== asesor.email);
+        asesoresTodos = asesores;
+        guardarAsesores();
+      }
+    }
+
+    function mostrarListaAsesores() {
+      const lista = document.getElementById('listaAsesores');
+      const busqueda = document.getElementById('buscarAsesor')?.value.toLowerCase() || '';
+
+      const asesoresFiltrados = asesores.filter(a => 
+        a.email.toLowerCase().includes(busqueda)
+      );
+
+      if (asesoresFiltrados.length === 0) {
+        lista.innerHTML = '<p class="text-gray-500 text-center py-4">No hay asesores</p>';
+        return;
+      }
+
+      lista.innerHTML = asesoresFiltrados.map(asesor => `
+        <div class="flex justify-between items-center p-3 bg-white border rounded-lg">
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">${asesor.email}</p>
+            <p class="text-sm text-gray-500">Estado: <span class="font-bold ${asesor.estado === 'activo' ? 'text-green-600' : 'text-red-600'}">${asesor.estado}</span></p>
+          </div>
+          <div class="flex gap-2">
+            ${asesor.estado === 'activo' ? 
+              `<button onclick="eliminarAsesor(${JSON.stringify(asesor).replace(/"/g, '&quot;')})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">❌ Desactivar</button>` :
+              `<button onclick="reactivarAsesor(${JSON.stringify(asesor).replace(/"/g, '&quot;')})" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">✅ Activar</button>`
+            }
+            <button onclick="eliminarAsesorPermanente(${JSON.stringify(asesor).replace(/"/g, '&quot;')})" class="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1 rounded text-sm font-bold">✕</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filtrarAsesores() {
+      mostrarListaAsesores();
+    }
+
+    function volverAlLogin() {
+      document.getElementById('adminPanel').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('adminPassword').value = '';
+      document.getElementById('adminContent').classList.add('hidden');
+      document.getElementById('passwordSection').classList.remove('hidden');
+    }
+
+
+
+    function cerrarSesion() {
+      usuarioActual = null;
+      document.getElementById('emailInput').value = '';
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('evaluacionScreen').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('errorLogin').classList.add('hidden');
+    }
+
+    function mostrarError(mensaje, elemento) {
+      elemento.textContent = mensaje;
+      elemento.classList.remove('hidden');
+      setTimeout(() => elemento.classList.add('hidden'), 4000);
+    }
+
+    // Event listeners para Enter
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('emailInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') loginAsesor();
+      });
+      document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') loginAsesor();
+      });
+      document.getElementById('adminPassword').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') verificarAdminPassword();
+      });
+      document.getElementById('nuevoEmail').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') agregarAsesor();
+      });
+    });
+  </script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyC7gk1hfqVgwaRyKmO36hYHzIWvBkb-dBk",
+    authDomain: "herramienta-e0611.firebaseapp.com",
+    projectId: "herramienta-e0611",
+    storageBucket: "herramienta-e0611.firebasestorage.app",
+    messagingSenderId: "458332825529",
+    appId: "1:458332825529:web:5f9dee14cb8f82d4727868",
+    measurementId: "G-W96Q8CF98F"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d7b33262280d9f7',t:'MTc3MjczNTUwOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+ <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/HERRAMIENTA/service-worker.js")
+    .then((registration) => {
+
+      registration.onupdatefound = () => {
+        const newWorker = registration.installing;
+
+        newWorker.onstatechange = () => {
+          if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+
+            const updateBanner = document.createElement("div");
+            updateBanner.innerHTML = `
+              <div style="
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #0f172a;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 12px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+                z-index: 9999;
+                font-family: sans-serif;
+              ">
+                🔄 Nueva versión disponible
+                <button id="updateBtn" style="
+                  margin-left: 15px;
+                  padding: 6px 12px;
+                  border: none;
+                  background: #22c55e;
+                  color: white;
+                  border-radius: 8px;
+                  cursor: pointer;
+                ">Actualizar</button>
+              </div>
+            `;
+
+            document.body.appendChild(updateBanner);
+
+            document.getElementById("updateBtn").addEventListener("click", () => {
+              window.location.reload();
+            });
+          }
+        };
+      };
+
+    })
+    .catch(error => {
+      console.error("Error registrando el Service Worker:", error);
+    });
+}
+</script>
+ </body>
 </html>
