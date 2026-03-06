@@ -6,65 +6,6 @@
 <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-192.png"> 
   <title>HERRAMIENTA DE BURÓ-SOLIDARIOS - Login</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <style>
-    body { 
-      box-sizing: border-box; 
-    }
-  </style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
- </head>
- <body class="bg-gradient-to-br from-blue-900 to-blue-800 min-h-screen flex items-center justify-center p-4 md:p-8"><!-- Pantalla de Login -->
-  <div id="loginScreen" class="w-full max-w-md md:max-w-lg lg:max-w-xl">
-   <div class="bg-white rounded-lg shadow-2xl p-8">
-    <h1 class="text-3xl font-bold text-center mb-2 text-gray-800">HERRAMIENTA DE BURÓ</h1>
-    <p class="text-center text-gray-600 mb-6">Acceso para Asesores</p>
-    <div class="space-y-4">
-     <div><label class="block text-gray-700 font-semibold mb-2">Correo</label> <input id="emailInput" type="email" placeholder="tu@correo.com" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
-     </div>
-     <div><label class="block text-gray-700 font-semibold mb-2">Contraseña</label> <input id="passwordInput" type="password" placeholder="Contraseña" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
-     </div>
-     <div id="errorLogin" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg"></div><button onclick="loginAsesor()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-colors"> Iniciar Sesión </button> <button onclick="mostrarPanelAdmin()" class="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 rounded-lg text-sm transition-colors"> 🔑 Panel Admin </button>
-    </div>
-   </div>
-  </div><!-- Panel Admin -->
-  <div id="adminPanel" class="hidden w-full max-w-2xl">
-   <div class="bg-white rounded-lg shadow-2xl p-8">
-    <h1 class="text-3xl font-bold mb-2 text-gray-800">Panel de Administración</h1>
-    <p class="text-gray-600 mb-6">Gestión de Asesores</p>
-    <div id="adminError" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4"></div>
-    <div id="passwordSection" class="mb-6 p-4 bg-blue-50 rounded-lg">
-     <h3 class="font-bold mb-3 text-gray-800">Ingresa la Contraseña Admin</h3><input id="adminPassword" type="password" placeholder="Contraseña admin" class="w-full p-2 border-2 border-gray-300 rounded-lg mb-2"> <button onclick="verificarAdminPassword()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg">Verificar</button>
-    </div>
-    <div id="adminContent" class="hidden"><!-- Agregar Asesor -->
-     <div class="mb-6 p-4 bg-green-50 rounded-lg">
-      <h3 class="font-bold mb-3 text-gray-800">Agregar Nuevo Asesor</h3><input id="nuevoEmail" type="email" placeholder="correo@ejemplo.com" class="w-full p-2 border rounded mb-2"> <button onclick="agregarAsesor()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg">+ Agregar</button>
-      <div id="mensajeAgregado" class="hidden mt-2 bg-green-200 text-green-800 p-2 rounded"></div>
-     </div><!-- Lista de Asesores -->
-     <div class="mb-4">
-      <h3 class="font-bold mb-3 text-gray-800">Asesores Registrados</h3><input id="buscarAsesor" type="text" placeholder="Buscar correo..." class="w-full p-2 border rounded mb-3" oninput="filtrarAsesores()">
-      <div id="listaAsesores" class="space-y-2 max-h-80 overflow-y-auto border rounded-lg p-3 bg-gray-50"><!-- Se llena dinámicamente -->
-      </div>
-     </div>
-     <div class="flex gap-2">
-      <button onclick="volverAlLogin()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 rounded-lg">← Volver</button>
-     </div>
-    </div>
-   </div>
-  </div><!-- Pantalla de Evaluación -->
-  <div id="evaluacionScreen" class="hidden w-full h-full bg-gradient-to-br from-blue-900 to-blue-800 relative">
-   <!-- Botón flotante Cerrar Sesión --> <button onclick="cerrarSesion()" class="fixed top-4 right-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors shadow-lg z-50"> Cerrar Sesión </button> <!-- Info del usuario (opcional, en esquina superior izquierda) -->
-   <div class="fixed top-4 left-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg z-50">
-    <p class="text-sm">📧 <span id="emailAsesor"></span></p>
-   </div><!-- Área principal para tu sistema -->
-   <div id="areaContenido" class="w-full h-full overflow-auto">
-<!doctype html>
-<html lang="es" class="h-full">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Análisis de Riesgo Crediticio</title>
     <style>
         body {
             box-sizing: border-box;
@@ -3877,3 +3818,4 @@ if ("serviceWorker" in navigator) {
 </script>
  </body>
 </html>
+
