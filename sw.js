@@ -1,114 +1,68 @@
-const CACHE_VERSION = "v10";
-const CACHE_NAME = `herramienta-${CACHE_VERSION}`;
+// Versiones de cache
+const CACHE_VERSION = "v2";
+const STATIC_CACHE = `herramienta-static-${CACHE_VERSION}`;
+const DYNAMIC_CACHE = `herramienta-dynamic-${CACHE_VERSION}`;
 
+// Archivos estáticos siempre cacheados
 const STATIC_ASSETS = [
-  "/HERRAMIENTA/styles.css",
-  "/HERRAMIENTA/app.js",
-  "/HERRAMIENTA/manifest.json",
-  "/HERRAMIENTA/icon-192.png",
-  "/HERRAMIENTA/icon-512.png"
+  "/HERRAMIENTA-/styles.css",
+  "/HERRAMIENTA-/app.js",
+  "/HERRAMIENTA-/manifest.json",
+  "/HERRAMIENTA-/icon-192.png",
+  "/HERRAMIENTA-/icon-512.png"
 ];
 
-
-// =====================
-// INSTALL
-// =====================
+// Instalación del SW y cache de assets seguros
 self.addEventListener("install", event => {
-  self.skipWaiting();
-
   event.waitUntil(
-    caches.open(CACHE_NAME).then(async cache => {
-      for (const asset of STATIC_ASSETS) {
-        try {
-          await cache.add(asset);
-        } catch (err) {
-          console.warn("No se pudo cachear:", asset);
-        }
-      }
-    })
+    caches.open(STATIC_CACHE).then(cache => cache.addAll(STATIC_ASSETS))
   );
+  self.skipWaiting();
 });
 
-
-// =====================
-// ACTIVATE
-// =====================
+// Activación y limpieza de caches viejos
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
+        keys.filter(key => key !== STATIC_CACHE && key !== DYNAMIC_CACHE)
+            .map(key => caches.delete(key))
       )
     )
   );
-
   self.clients.claim();
 });
 
-
-// =====================
-// MENSAJE PARA UPDATE INMEDIATO
-// =====================
-self.addEventListener("message", event => {
-  if (event.data && event.data.action === "skipWaiting") {
-    self.skipWaiting();
-  }
-});
-
-
-// =====================
-// FETCH
-// =====================
+// Manejo de fetch
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
+  const requestURL = new URL(event.request.url);
 
-  const url = new URL(event.request.url);
-  if (url.origin !== self.location.origin) return;
-
-  // 🔹 HTML → Network First
-  if (event.request.headers.get("accept")?.includes("text/html")) {
+  if (requestURL.pathname === "/HERRAMIENTA-/" || requestURL.pathname.endsWith("index.html")) {
     event.respondWith(
       fetch(event.request)
         .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, clone);
+          return caches.open(DYNAMIC_CACHE).then(cache => {
+            cache.put(event.request, response.clone());
+            return response;
           });
-          return response;
         })
-        .catch(() => caches.match(event.request))
+        .catch(() => {
+          return caches.open(DYNAMIC_CACHE).then(cache => cache.match(event.request));
+        })
     );
     return;
   }
 
-  // 🔹 CSS / JS / Imágenes → Cache First
+  if (requestURL.pathname.endsWith("manifest.json")) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-
-      return fetch(event.request).then(response => {
-        if (!response || response.status !== 200) {
-          return response;
-        }
-
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, clone);
-        });
-
-        return response;
-      });
-    })
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });
- 2 archivos adjuntos
-  •  Analizado por Gmail
-
-      
- 
-
 
 
 
