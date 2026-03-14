@@ -2,8 +2,6 @@ const CACHE_VERSION = "v10";
 const CACHE_NAME = `herramienta-${CACHE_VERSION}`;
 
 const STATIC_ASSETS = [
-  "/HERRAMIENTA/",
-  "/HERRAMIENTA/index.html",
   "/HERRAMIENTA/styles.css",
   "/HERRAMIENTA/app.js",
   "/HERRAMIENTA/manifest.json",
