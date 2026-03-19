@@ -1,5 +1,5 @@
 // Versiones de cache
-const CACHE_VERSION = "v2";
+const CACHE_VERSION = "v3";
 const STATIC_CACHE = `herramienta-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `herramienta-dynamic-${CACHE_VERSION}`;
 
