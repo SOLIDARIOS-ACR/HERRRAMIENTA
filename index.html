@@ -3611,60 +3611,63 @@ function actualizarBotonRegresar() {
     });
   };
 </script>
- </body>
-  <script>
+<script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/HERRAMIENTA/service-worker.js")
+    // 1. Asegúrate de que la ruta sea correcta según tu servidor
+    navigator.serviceWorker.register("/HERRAMIENTA/service-worker.js")
     .then((registration) => {
 
-      registration.onupdatefound = () => {
-        const newWorker = registration.installing;
+        registration.onupdatefound = () => {
+            const newWorker = registration.installing;
 
-        newWorker.onstatechange = () => {
-          if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+            newWorker.onstatechange = () => {
+                // Si el nuevo SW está instalado y ya había uno controlando la página...
+                if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                    
+                    // Crear el banner de actualización
+                    const updateBanner = document.createElement("div");
+                    updateBanner.id = "pwa-update-banner"; // ID para manejo fácil
+                    updateBanner.innerHTML = `
+                        <div style="
+                            position: fixed; bottom: 20px; left: 50%;
+                            transform: translateX(-50%); background: #0f172a;
+                            color: white; padding: 15px 20px; border-radius: 12px;
+                            box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 9999;
+                            font-family: sans-serif; display: flex; align-items: center;
+                        ">
+                            <span>🔄 Nueva versión disponible</span>
+                            <button id="updateBtn" style="
+                                margin-left: 15px; padding: 8px 16px; border: none;
+                                background: #22c55e; color: white; border-radius: 8px;
+                                cursor: pointer; font-weight: bold;
+                            ">Actualizar ahora</button>
+                        </div>
+                    `;
 
-            const updateBanner = document.createElement("div");
-            updateBanner.innerHTML = `
-              <div style="
-                position: fixed;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #0f172a;
-                color: white;
-                padding: 15px 20px;
-                border-radius: 12px;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-                z-index: 9999;
-                font-family: sans-serif;
-              ">
-                🔄 Nueva versión disponible
-                <button id="updateBtn" style="
-                  margin-left: 15px;
-                  padding: 6px 12px;
-                  border: none;
-                  background: #22c55e;
-                  color: white;
-                  border-radius: 8px;
-                  cursor: pointer;
-                ">Actualizar</button>
-              </div>
-            `;
+                    document.body.appendChild(updateBanner);
 
-            document.body.appendChild(updateBanner);
-
-            document.getElementById("updateBtn").addEventListener("click", () => {
-              window.location.reload();
-            });
-          }
+                    // LOGICA DE ACTUALIZACIÓN REAL
+                    document.getElementById("updateBtn").addEventListener("click", () => {
+                        // Enviamos el mensaje 'skipWaiting' al Service Worker que está esperando
+                        newWorker.postMessage({ action: 'skipWaiting' });
+                    });
+                }
+            };
         };
-      };
-
     })
     .catch(error => {
-      console.error("Error registrando el Service Worker:", error);
+        console.error("Error registrando el Service Worker:", error);
+    });
+
+    // Escuchar cuando el nuevo Service Worker tome el control y recargar
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+            window.location.reload();
+            refreshing = true;
+        }
     });
 }
 </script>
- </body>
+  </body>
  </html>
