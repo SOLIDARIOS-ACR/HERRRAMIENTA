@@ -1,24 +1,24 @@
 {
   "name": "Herramienta de Buró",
   "short_name": "Herramienta-Buró",
-  "start_url": "/HERRAMIENTA/",
-  "scope": "/HERRAMIENTA/",
+  "start_url": "index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#007bff",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/HERRAMIENTA/icon-192.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "/HERRAMIENTA/icon-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
