@@ -1,17 +1,16 @@
-// Versiones de cache
-const CACHE_VERSION = "v20";
+// Versiones de cache - Incrementa esto cada vez que edites tu index.html
+const CACHE_VERSION = "v21"; 
 const STATIC_CACHE = `herramienta-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `herramienta-dynamic-${CACHE_VERSION}`;
 
-// Archivos estáticos - USAMOS RUTAS RELATIVAS './'
+// Archivos estáticos indispensables
 const STATIC_ASSETS = [
   "./",
   "./index.html",
-  "./styles.css",
-  "./app.js",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png"
+  // Si no tienes styles.css o app.js externos (porque todo está en el HTML), quítalos de aquí
 ];
 
 // Instalación del SW
@@ -19,74 +18,82 @@ self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(STATIC_CACHE)
       .then(cache => {
-        console.log("Caching assets...");
+        console.log("SW: Pre-cacheando archivos estáticos");
+        // Usamos addAll pero con un catch individual por si falta algún archivo
         return cache.addAll(STATIC_ASSETS);
       })
-      .catch(err => console.error("Error en cache.addAll:", err))
   );
   self.skipWaiting();
 });
 
-// Activación y limpieza de caches viejos
+// Activación y limpieza de caches obsoletos
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(key => key !== STATIC_CACHE && key !== DYNAMIC_CACHE)
-            .map(key => caches.delete(key))
-      )
-    )
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys
+          .filter(key => key !== STATIC_CACHE && key !== DYNAMIC_CACHE)
+          .map(key => caches.delete(key))
+      );
+    })
   );
   self.clients.claim();
 });
 
-// Escuchar el mensaje 'skipWaiting' (Para que el botón 'Actualizar' del HTML funcione)
-self.addEventListener('message', (event) => {
-  if (event.data.action === 'skipWaiting') {
-    self.skipWaiting();
-  }
-});
-
-// Manejo de fetch
+// Manejo de peticiones (Fetch)
 self.addEventListener("fetch", event => {
+  const requestURL = new URL(event.request.url);
+
+  // IMPORTANTE: No cachear nada que venga de Firebase (Googleapis) 
+  // Esto evita que el login falle por archivos de sesión viejos
+  if (requestURL.origin.includes('googleapis.com') || requestURL.origin.includes('firebase')) {
+    return; 
+  }
+
   // Solo manejar peticiones GET
   if (event.request.method !== "GET") return;
 
-  const requestURL = new URL(event.request.url);
-
-  // Estrategia para el HTML: Network First (Red primero, luego cache)
-  if (requestURL.pathname.endsWith("/") || requestURL.pathname.endsWith("index.html")) {
+  // ESTRATEGIA: NETWORK FIRST (Red primero) para el HTML e INDEX
+  // Esto asegura que si cambias el código de Firebase, el usuario lo reciba de inmediato
+  if (event.request.mode === 'navigate' || requestURL.pathname.endsWith("index.html")) {
     event.respondWith(
       fetch(event.request)
-        .then(response => {
-          const clonedResponse = response.clone();
-          caches.open(DYNAMIC_CACHE).then(cache => {
-            cache.put(event.request, clonedResponse);
+        .then(networkRes => {
+          return caches.open(DYNAMIC_CACHE).then(cache => {
+            cache.put(event.request, networkRes.clone());
+            return networkRes;
           });
-          return response;
         })
-        .catch(() => caches.match(event.request))
+        .catch(() => caches.match(event.request)) // Si no hay internet, usa el cache
     );
     return;
   }
 
-  // Estrategia para el resto: Cache First (Cache primero, luego red)
+  // ESTRATEGIA: CACHE FIRST para imágenes e iconos
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request).then(fetchRes => {
-        // Opcional: Guardar en dynamic cache lo que no estaba en static
+    caches.match(event.request).then(cacheRes => {
+      return cacheRes || fetch(event.request).then(networkRes => {
+        // Guardar en cache dinámico lo que se vaya encontrando
         return caches.open(DYNAMIC_CACHE).then(cache => {
-          cache.put(event.request, fetchRes.clone());
-          return fetchRes;
+          // Solo cachear peticiones exitosas
+          if (networkRes.status === 200) {
+            cache.put(event.request, networkRes.clone());
+          }
+          return networkRes;
         });
       });
     }).catch(() => {
-      // Si todo falla (offline y no en cache), podrías retornar una imagen o página offline aquí
+        // Opcional: Retornar algo si falla todo
     })
   );
 });
 
-
+// Escuchar skipWaiting
+self.addEventListener('message', event => {
+  if (event.data === 'skipWaiting') {
+    self.skipWaiting();
+  }
+});
 
 
 
