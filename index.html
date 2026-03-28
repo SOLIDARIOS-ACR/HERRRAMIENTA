@@ -3614,5 +3614,38 @@ if ("serviceWorker" in navigator) {
     });
 }
 </script>
- </body>
+<script>
+document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const errorMsg = document.getElementById('login-error');
+
+    // Autenticación con Firebase
+    auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Éxito: Ocultar login y mostrar la app
+            document.getElementById('login-container').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+            console.log("Acceso concedido");
+        })
+        .catch((error) => {
+            // Error: Mostrar mensaje al usuario
+            errorMsg.innerText = "Correo o contraseña incorrectos.";
+            errorMsg.classList.remove('hidden');
+            console.error("Error de acceso:", error.message);
+        });
+});
+
+// Función para Cerrar Sesión (ya tienes el botón en el header)
+function cerrarSesion() {
+    auth.signOut().then(() => {
+        document.getElementById('login-container').classList.remove('hidden');
+        document.getElementById('app-container').classList.add('hidden');
+        window.location.reload(); // Limpiar estado
+    });
+}
+</script>
+</body>
  </html>
