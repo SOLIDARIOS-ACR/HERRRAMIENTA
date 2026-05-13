@@ -1671,12 +1671,29 @@ function actualizarBotonRegresar() {
        <div class="cuadro-content">
         <p style="color: #4a5568; margin-bottom: 12px; background: #e6f2ff; padding: 10px; border-radius: 8px; border-left: 4px solid #3182ce; font-size: 0.85em;"><strong style="color: #2c5282;">Aplica:</strong> Socios nuevos</p>
         <p style="font-weight: 600; margin-bottom: 10px;">En la columna "ÚLTIMO PAGO" ¿La fecha es mayor a 4 años?</p>
-        <div class="question-buttons"><button class="btn btn-success" onclick="evaluarCuadro3('si')">SÍ</button> <button class="btn btn-danger" onclick="evaluarCuadro3('no')">NO (Menor a 4 años)</button>
+        <div class="question-buttons">
+            <button class="btn btn-success" onclick="evaluarCuadro3('si')">SÍ</button>
+            <button class="btn btn-danger" onclick="mostrarCalculadora3()">NO (Menor a 4 años)</button>
         </div>
-        <div class="button-group" style="margin-top: 15px;"><button class="btn btn-secondary" onclick="resetearCuadro3()">Limpiar</button>
+
+        <div id="calculadora3" style="display: none; margin-top: 20px; background: #f8f9fa; padding: 20px; border-radius: 8px;">
+            <h4 style="color: #f39c12; margin-bottom: 15px;">Ingresar Monto a Pagar</h4>
+            <p style="margin-bottom: 15px; color: #666;">Ingrese el monto que desea considerar para esta cuenta</p>
+            <div class="form-group">
+                <label for="montoPagar3">Monto a Pagar ($):</label>
+                <input type="number" id="montoPagar3" placeholder="Ej: 800" step="0.01">
+            </div>
+            <div class="button-group">
+                <button class="btn btn-success" onclick="guardarMontoCuadro3()">Guardar Automáticamente</button>
+                <button class="btn btn-secondary" onclick="resetearCuadro3()">Cancelar</button>
+            </div>
+        </div>
+
+        <div class="button-group" style="margin-top: 15px;">
+            <button class="btn btn-secondary" onclick="resetearCuadro3()">Limpiar Todo</button>
         </div>
         <div id="resultado3"></div>
-       </div>
+    </div>
       </div><!-- CUADRO 4 -->
       <div class="cuadro-box">
        <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); padding: 15px 18px; box-shadow: 0 4px 6px rgba(30, 60, 114, 0.3);">
@@ -2182,11 +2199,63 @@ function actualizarBotonRegresar() {
             let resultado;
             if (respuesta === 'si') {
                 resultado = '<div class="result result-rejected"><strong>RESULTADO:</strong> CUENTA RECHAZADA - Último pago mayor a 4 años</div>';
-            } else {
-                resultado = '<div class="result result-approved"><strong>RESULTADO:</strong> CUENTA APROBADA<br><div style="background: #fff3cd; border: 2px solid #f39c12; border-radius: 8px; padding: 15px; margin: 15px 0; text-align: center;"><strong style="color: #856404;">ACCIÓN OBLIGATORIA</strong><br><span style="color: #856404;">Debe registrar esta cuenta para continuar</span><br><button class="btn btn-success" onclick="abrirModalRegistro(3)" style="margin-top: 10px; animation: pulse 2s infinite;">REGISTRAR CUENTA OBLIGATORIO</button></div></div>';
-            }
-            document.getElementById('resultado3').innerHTML = resultado;
         }
+        // Ocultar calculadora si estaba visible
+    document.getElementById('calculadora3').style.display = 'none';
+    document.getElementById('montoPagar3').value = '';
+    
+    if (respuesta === 'si') {
+        document.getElementById('resultado3').innerHTML = '<div class="result result-rejected"><strong>RESULTADO:</strong> CUENTA RECHAZADA - Último pago mayor a 4 años</div>';
+    }
+}
+
+function mostrarCalculadora3() {
+    // Ocultar resultado de "SI" si estaba visible
+    document.getElementById('resultado3').innerHTML = '';
+    document.getElementById('calculadora3').style.display = 'block';
+}
+
+function guardarMontoCuadro3() {
+    const montoPagar = parseFloat(document.getElementById('montoPagar3').value);
+    
+    if (!montoPagar || montoPagar <= 0) {
+        document.getElementById('resultado3').innerHTML = '<div class="result result-rejected">Por favor ingrese un monto válido</div>';
+        return;
+    }
+
+    // Verifica el límite de cuentas (usando tu variable global cuentasGuardadas)
+    if (typeof cuentasGuardadas !== 'undefined' && cuentasGuardadas >= 50) {
+        document.getElementById('resultado3').innerHTML = '<div class="result result-rejected">Máximo 50 cuentas permitidas. Limpie el Cuadro 9 para continuar.</div>';
+        return;
+    }
+
+    // Lógica de guardado automático (Igual al Cuadro 4)
+    cuadroActual = 3; 
+    montoCalculado8 = montoPagar; // Asigna el monto para que lo tome el registro
+    
+    const siguienteCuenta = encontrarSiguienteCuentaDisponible();
+    if (siguienteCuenta) {
+        registrarCuenta(siguienteCuenta);
+        
+        const montoFormateado = montoPagar.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'});
+        document.getElementById('resultado3').innerHTML = `
+            <div class="result result-approved">
+                <strong>MONTO GUARDADO:</strong> ${montoFormateado}<br>
+                <small>Cuenta ${siguienteCuenta} registrada y guardada automáticamente en la suma total</small>
+            </div>
+        `;
+        
+        // Limpieza de interfaz
+        document.getElementById('calculadora3').style.display = 'none';
+        document.getElementById('montoPagar3').value = '';
+    }
+}
+
+function resetearCuadro3() {
+    document.getElementById('resultado3').innerHTML = '';
+    document.getElementById('calculadora3').style.display = 'none';
+    document.getElementById('montoPagar3').value = '';
+}
 
         // Funciones de evaluación CUADRO 4
         function evaluarCuadro4Mayor1Ano(respuesta) {
